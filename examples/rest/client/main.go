@@ -10,6 +10,7 @@ import (
 	"github.com/go-chassis/go-chassis/core/common"
 	"github.com/go-chassis/go-chassis/core/lager"
 	"github.com/go-chassis/go-chassis/pkg/util/httputil"
+	"log"
 )
 
 //if you use go run main.go instead of binary run, plz export CHASSIS_HOME=/{path}/{to}/rest/client/
@@ -20,7 +21,11 @@ func main() {
 		return
 	}
 
-	req, err := rest.NewRequest("GET", "http://RESTServer/sayhello/world", nil)
+	requestUrl:="http://RESTServer/sayhello/world"
+
+	log.Print("requestUrl:",requestUrl)
+
+	req, err := rest.NewRequest("GET", requestUrl, nil)
 	if err != nil {
 		lager.Logger.Error("new request failed.")
 		return

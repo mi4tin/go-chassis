@@ -14,6 +14,7 @@ var num = rand.Intn(100)
 
 //RestFulHello is a struct used for implementation of restfull hello program
 type RestFulHello struct {
+
 }
 
 //Sayhello is a method used to reply user with hello
@@ -65,7 +66,7 @@ func (r *RestFulHello) URLPatterns() []rf.Route {
 			Returns: []*rf.Returns{{Code: 200}}},
 
 		{Method: http.MethodGet, Path: "/sayhello/{userid}", ResourceFuncName: "Sayhello",
-			Returns: []*rf.Returns{{Code: 200}}},
+			Returns: []*rf.Returns{{Code: 200}},IsCheckIp:true},
 
 		{Method: http.MethodPost, Path: "/sayhi", ResourceFuncName: "Sayhi",
 			Returns: []*rf.Returns{{Code: 200}}},
