@@ -40,6 +40,7 @@ func GetServerFunc(protocol string) (NewFunc, error) {
 //GetServer return the server based on protocol
 func GetServer(protocol string) (ProtocolServer, error) {
 	s, ok := servers[protocol]
+	fmt.Println("getSetver:",protocol)
 	if !ok {
 		return nil, fmt.Errorf("[%s] server isn't running ", protocol)
 	}

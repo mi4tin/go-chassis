@@ -127,7 +127,7 @@ type Protocol struct {
 	WorkerNumber int    `yaml:"workerNumber"`
 	Transport    string `yaml:"transport"`
 
-	IPWhiteList    []string `yaml:"ipWhiteList"`
+	//IPWhiteList    []string `yaml:"ipWhiteList"`
 }
 
 // MicroserviceCfg microservice.yaml 配置项

@@ -60,5 +60,6 @@ func GetRouteSpecs(schema interface{}) ([]Route, error) {
 	if routes, ok := vals[0].Interface().([]Route); ok {
 		return routes, nil
 	}
+	fmt.Println("server.gate")
 	return []Route{}, fmt.Errorf("<rest.RegisterResource> result of 'URLPatterns' function not []*Route type in servant struct `%s`", name)
 }

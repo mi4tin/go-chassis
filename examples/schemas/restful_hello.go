@@ -66,7 +66,7 @@ func (r *RestFulHello) URLPatterns() []rf.Route {
 			Returns: []*rf.Returns{{Code: 200}}},
 
 		{Method: http.MethodGet, Path: "/sayhello/{userid}", ResourceFuncName: "Sayhello",
-			Returns: []*rf.Returns{{Code: 200}},IsCheckIp:true},
+			Returns: []*rf.Returns{{Code: 200}}},
 
 		{Method: http.MethodPost, Path: "/sayhi", ResourceFuncName: "Sayhi",
 			Returns: []*rf.Returns{{Code: 200}}},
