@@ -1,0 +1,30 @@
+swagger: "2.0"
+info:
+  title: ""
+  version: ""
+basePath: /
+paths:
+  /:
+    get:
+      operationId: func1
+      responses:
+        "200":
+          description: ""
+  /sayhello/{userid}:
+    get:
+      operationId: func2
+      responses:
+        "200":
+          description: ""
+  /sayhi:
+    post:
+      operationId: func3
+      responses:
+        "200":
+          description: ""
+  /sayjson:
+    post:
+      operationId: func4
+      responses:
+        "200":
+          description: ""
