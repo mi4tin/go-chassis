@@ -121,10 +121,13 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 			return "", fmt.Errorf("router func can not find: %s", route.ResourceFuncName)
 		}
 
+		//ip限制
+		fmt.Println("handler0:",route.IsCheckIp)
+		isCheckIp:=route.IsCheckIp
 		handler := func(req *restful.Request, rep *restful.Response) {
 			fmt.Println("handler....")
 			//ip限制
-			fmt.Println("handler:",route.IsCheckIp)
+			fmt.Println("handler:",isCheckIp)
 
 			c, err := handler.GetChain(common.Provider, r.opts.ChainName)
 			if err != nil {
