@@ -125,10 +125,6 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 		fmt.Println("handler0:",route.IsCheckIp)
 		isCheckIp:=route.IsCheckIp
 		handler := func(req *restful.Request, rep *restful.Response) {
-			fmt.Println("handler....")
-			//ip限制
-			fmt.Println("handler:",isCheckIp)
-
 			c, err := handler.GetChain(common.Provider, r.opts.ChainName)
 			if err != nil {
 				lager.Logger.Errorf("Handler chain init err [%s]", err.Error())
@@ -136,6 +132,7 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 				rep.WriteErrorString(http.StatusInternalServerError, err.Error())
 				return
 			}
+			//todo:分布式测试
 			inv, err := httpRequest2Invocation(req, schemaName, method.Name)
 			if err != nil {
 				lager.Logger.Errorf("transfer http request to invocation failed, err [%s]", err.Error())
@@ -155,6 +152,11 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 				bs.req = req
 				bs.resp = rep
 				ir.Status = bs.resp.StatusCode()
+
+				fmt.Println("handler....")
+				//todo:ip限制暂时放在此
+				fmt.Println("handler:",isCheckIp)
+
 				method.Func.Call([]reflect.Value{schemaValue, reflect.ValueOf(bs)})
 				if bs.resp.StatusCode() >= http.StatusBadRequest {
 					return fmt.Errorf("get err from http handle, get status: %d", bs.resp.StatusCode())
@@ -244,6 +246,14 @@ func (r *restfulServer) Start() error {
 	r.opts.Address = config.Address
 	r.mux.Unlock()
 	r.container.Add(r.ws)
+	//r.container.Filter(func(request *restful.Request, response *restful.Response,fl *restful.FilterChain){
+	//	//ip验证
+	//	fmt.Println(request.Attribute())
+	//	fmt.Println(request.SelectedRoutePath())
+	//	response.Write([]byte("not pass filter"))
+	//	return
+	//	fl.ProcessFilter(request, response)
+	//})
 	if r.opts.TLSConfig != nil {
 		r.server = &http.Server{Addr: config.Address, Handler: r.container, TLSConfig: r.opts.TLSConfig}
 	} else {

@@ -28,6 +28,14 @@ func (r *RestGateFulHello) Sayhello(b *rf.Context) {
 	b.Write([]byte(fmt.Sprintf("user %s from %d", id, num)))
 }
 
+//Sayhello is a method used to reply user with hello
+func (r *RestGateFulHello) Sayhello1(b *rf.Context) {
+	id := b.ReadPathParameter("userid")
+	log.Printf("get user id: " + id)
+	log.Printf("get user name: " + b.ReadRequest().Header.Get("user"))
+	b.Write([]byte(fmt.Sprintf("user %s from %d", id, num)))
+}
+
 //Sayhi is a method used to reply user with hello world text
 func (r *RestGateFulHello) Sayhi(b *rf.Context) {
 	result := struct {
@@ -64,6 +72,8 @@ func (r *RestGateFulHello) URLPatterns() []rf.Route {
 			Returns: []*rf.Returns{{Code: 200}}},
 
 		{Method: http.MethodGet, Path: "/sayhello/{userid}", ResourceFuncName: "Sayhello",
+			Returns: []*rf.Returns{{Code: 200}},IsCheckIp:true},
+		{Method: http.MethodGet, Path: "/sayhello/{userid}", ResourceFuncName: "Sayhello1",
 			Returns: []*rf.Returns{{Code: 200}},IsCheckIp:true},
 
 		{Method: http.MethodPost, Path: "/sayhi", ResourceFuncName: "Sayhi",
