@@ -83,3 +83,10 @@ func (r *RestGateFulHello) URLPatterns() []rf.Route {
 			Returns: []*rf.Returns{{Code: 200}}},
 	}
 }
+
+
+//URLPatterns helps to respond for corresponding API calls
+func (r *RestGateFulHello) Config() rf.Config {
+	return rf.Config{IpWhiteList:"testconfigip"}
+}
+

@@ -6,7 +6,6 @@ cse:
   protocols:
     restGate:
       listenAddress: "127.0.0.1:6001"
-      ipWhiteList: "127.0.0.1|127.0.0.2|"
       #advertiseAddress: "internal_ip:5001"
   handler:
     chain:

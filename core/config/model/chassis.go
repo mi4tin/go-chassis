@@ -126,8 +126,6 @@ type Protocol struct {
 	Advertise    string `yaml:"advertiseAddress"`
 	WorkerNumber int    `yaml:"workerNumber"`
 	Transport    string `yaml:"transport"`
-
-	IPWhiteList    []interface{} `yaml:"ipWhiteList"`
 }
 
 // MicroserviceCfg microservice.yaml 配置项

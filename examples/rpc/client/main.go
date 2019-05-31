@@ -17,6 +17,7 @@ func main() {
 		lager.Logger.Error("Init failed." + err.Error())
 		return
 	}
+
 	//declare reply struct
 	reply := &helloworld.HelloReply{}
 	//Invoke with microservice name, schema ID and operation ID

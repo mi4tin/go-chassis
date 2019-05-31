@@ -41,6 +41,10 @@ const (
 	MimeMult          = "multipart/form-data"
 )
 
+const (
+	Meta_IsCheckIp="IsCheckIp"
+)
+
 func init() {
 	server.InstallPlugin(Name, newRestfulServer)
 }
@@ -105,6 +109,9 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 	if err != nil {
 		return "", err
 	}
+	configObj,err:=GetConfig(schema)
+	fmt.Println("configObj:",configObj)
+
 	schemaType := reflect.TypeOf(schema)
 	schemaValue := reflect.ValueOf(schema)
 	var schemaName string
@@ -125,7 +132,7 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 		fmt.Println("handler0:",route.IsCheckIp)
 		isCheckIp:=route.IsCheckIp
 		handler := func(req *restful.Request, rep *restful.Response) {
-			c, err := handler.GetChain(common.Provider, r.opts.ChainName)
+			c, err := handler.GetChain(common.Provider, r.opts.ChainName)//放在此处是为了实现api级~~
 			if err != nil {
 				lager.Logger.Errorf("Handler chain init err [%s]", err.Error())
 				rep.AddHeader("Content-Type", "text/plain")
@@ -153,7 +160,7 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 				bs.resp = rep
 				ir.Status = bs.resp.StatusCode()
 
-				fmt.Println("handler....")
+				fmt.Println("handlerwsh....")
 				//todo:ip限制暂时放在此
 				fmt.Println("handler:",isCheckIp)
 
@@ -173,6 +180,7 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 	return reflect.TypeOf(schema).String(), nil
 }
 func transfer(inv *invocation.Invocation, req *restful.Request) {
+	fmt.Println("Metadata:",inv.Metadata)
 	for k, v := range inv.Metadata {
 		req.SetAttribute(k, v.(string))
 	}
@@ -246,14 +254,12 @@ func (r *restfulServer) Start() error {
 	r.opts.Address = config.Address
 	r.mux.Unlock()
 	r.container.Add(r.ws)
-	//r.container.Filter(func(request *restful.Request, response *restful.Response,fl *restful.FilterChain){
-	//	//ip验证
-	//	fmt.Println(request.Attribute())
-	//	fmt.Println(request.SelectedRoutePath())
-	//	response.Write([]byte("not pass filter"))
-	//	return
-	//	fl.ProcessFilter(request, response)
-	//})
+	r.container.Filter(func(request *restful.Request, response *restful.Response,fl *restful.FilterChain){
+		//ip验证
+		//fmt.Println(request.)
+		fmt.Println("SelectedRoutePath:",request.SelectedRoutePath())
+		fl.ProcessFilter(request, response)
+	})
 	if r.opts.TLSConfig != nil {
 		r.server = &http.Server{Addr: config.Address, Handler: r.container, TLSConfig: r.opts.TLSConfig}
 	} else {
