@@ -38,6 +38,8 @@ const (
 	Tracing = "tracing.yaml"
 	//Router is constant of type string
 	Router = "router.yaml"
+
+	Gate="gate.yaml"
 )
 
 var configDir string
@@ -71,6 +73,7 @@ func initDir() {
 		// CHASSIS_HOME has second most high priority
 		configDir = filepath.Join(homeDir, "conf")
 	}
+
 }
 
 //ChassisHomeDir is function used to get the home directory of chassis
@@ -138,6 +141,11 @@ func PaasLagerDefinition() string {
 //RouterDefinition is a function used to join .yaml file name with configuration directory
 func RouterDefinition() string {
 	return filepath.Join(GetConfDir(), Router)
+}
+
+//RouterDefinition is a function used to join .yaml file name with configuration directory
+func GateDefinition() string {
+	return filepath.Join(GetConfDir(), Gate)
 }
 
 //GetAuth is a function used to join .yaml file name with configuration directory

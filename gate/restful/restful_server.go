@@ -109,7 +109,7 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 	if err != nil {
 		return "", err
 	}
-	configObj,err:=GetConfig(schema)
+	configObj:=GetConfig()
 	fmt.Println("configObj:",configObj)
 
 	schemaType := reflect.TypeOf(schema)
@@ -160,9 +160,10 @@ func (r *restfulServer) Register(schema interface{}, options ...server.RegisterO
 				bs.resp = rep
 				ir.Status = bs.resp.StatusCode()
 
-				fmt.Println("handlerwsh....")
-				//todo:ip限制暂时放在此
-				fmt.Println("handler:",isCheckIp)
+				//验证ip
+				if isCheckIp{
+					fmt.Println("checkip:",configObj	)
+				}
 
 				method.Func.Call([]reflect.Value{schemaValue, reflect.ValueOf(bs)})
 				if bs.resp.StatusCode() >= http.StatusBadRequest {

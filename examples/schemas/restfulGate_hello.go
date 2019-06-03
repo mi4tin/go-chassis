@@ -73,8 +73,8 @@ func (r *RestGateFulHello) URLPatterns() []rf.Route {
 
 		{Method: http.MethodGet, Path: "/sayhello/{userid}", ResourceFuncName: "Sayhello",
 			Returns: []*rf.Returns{{Code: 200}},IsCheckIp:true},
-		{Method: http.MethodGet, Path: "/sayhello/{userid}", ResourceFuncName: "Sayhello1",
-			Returns: []*rf.Returns{{Code: 200}},IsCheckIp:true},
+		{Method: http.MethodGet, Path: "/sayhello1/{userid}", ResourceFuncName: "Sayhello1",
+			Returns: []*rf.Returns{{Code: 200}}},
 
 		{Method: http.MethodPost, Path: "/sayhi", ResourceFuncName: "Sayhi",
 			Returns: []*rf.Returns{{Code: 200}}},
@@ -84,9 +84,4 @@ func (r *RestGateFulHello) URLPatterns() []rf.Route {
 	}
 }
 
-
-//URLPatterns helps to respond for corresponding API calls
-func (r *RestGateFulHello) Config() rf.Config {
-	return rf.Config{IpWhiteList:"testconfigip"}
-}
 

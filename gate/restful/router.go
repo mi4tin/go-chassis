@@ -11,10 +11,6 @@ const (
 	Query = "query"
 )
 
-type Config struct {
-	IpWhiteList string
-}
-
 //Route describe http route path and swagger specifications for API
 type Route struct {
 	Method           string        //Method is one of the following: GET,PUT,POST,DELETE. required
@@ -68,27 +64,3 @@ func GetRouteSpecs(schema interface{}) ([]Route, error) {
 	return []Route{}, fmt.Errorf("<rest.RegisterResource> result of 'URLPatterns' function not []*Route type in servant struct `%s`", name)
 }
 
-
-//GetRouteSpecs is to return a rest API specification of a go struct
-func GetConfig(schema interface{}) (Config, error) {
-	rfValue := reflect.ValueOf(schema)
-	name := reflect.Indirect(rfValue).Type().Name()
-	urlPatternFunc := rfValue.MethodByName("Config")
-	if !urlPatternFunc.IsValid() {
-		return Config{}, fmt.Errorf("<rest.RegisterResource> no 'URLPatterns' function in servant struct `%s`", name)
-	}
-	vals := urlPatternFunc.Call([]reflect.Value{})
-	if len(vals) <= 0 {
-		return Config{}, fmt.Errorf("<rest.RegisterResource> call URLPatterns function failed in struct `%s`", name)
-	}
-
-	if !rfValue.CanInterface() {
-		return Config{}, fmt.Errorf("<rest.RegisterResource> result of 'URLPatterns' function not interface type in servant struct `%s`", name)
-	}
-
-	if config, ok := vals[0].Interface().(Config); ok {
-		return config, nil
-	}
-	fmt.Println("server.gate")
-	return Config{}, fmt.Errorf("<rest.RegisterResource> result of 'URLPatterns' function not []*Route type in servant struct `%s`", name)
-}
