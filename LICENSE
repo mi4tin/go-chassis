@@ -25,8 +25,7 @@
 
       "Source" form shall mean the preferred form for making modifications,
       including but not limited to software source code, documentation
-      source, and configuration files.
-
+      source, and 
       "Object" form shall mean any form resulting from mechanical
       transformation or translation of a Source form, including but
       not limited to compiled object code, generated documentation,
@@ -250,4 +249,4 @@ See licenses/LICENSE-datastream-aws
 For third_party/forked/go-micro/codec/codec.go,core/provider/default_provider.go:
 ========================================================================
 
-See licenses/LICENSE-golang
+See li
